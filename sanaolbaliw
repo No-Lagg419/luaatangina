@@ -1,119 +1,28 @@
-local player = game.Players.LocalPlayer
-local TweenService = game:GetService("TweenService")
+-- same top section up to screenGui creation...
 
--- GUI Setup
-local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "EggRandomizerGUI"
-screenGui.ResetOnSpawn = false
-screenGui.Parent = player:WaitForChild("PlayerGui")
+-- Pet Spawner Input (renamed from Pet Duplicate)
+local petSpawnerLabel = Instance.new("TextLabel")
+petSpawnerLabel.Size = UDim2.new(0, 90, 0, 18)
+petSpawnerLabel.Position = UDim2.new(0, 5, 0, 80)
+petSpawnerLabel.BackgroundTransparency = 1
+petSpawnerLabel.Text = "Pet Spawner:"
+petSpawnerLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+petSpawnerLabel.Font = Enum.Font.SourceSansBold
+petSpawnerLabel.TextSize = 12
+petSpawnerLabel.TextXAlignment = Enum.TextXAlignment.Left
+petSpawnerLabel.Parent = mainFrame
 
--- Transparent Intro Text
-local introText = Instance.new("TextLabel")
-introText.Size = UDim2.new(1, 0, 1, 0)
-introText.Position = UDim2.new(0, 0, 0, 0)
-introText.BackgroundTransparency = 1
-introText.Text = "RAYFIELD SCRIPT"
-introText.TextColor3 = Color3.fromRGB(255, 255, 255)
-introText.TextTransparency = 1
-introText.Font = Enum.Font.SourceSansBold
-introText.TextSize = 36
-introText.TextStrokeTransparency = 0.5
-introText.ZIndex = 10
-introText.Parent = screenGui
-
-TweenService:Create(introText, TweenInfo.new(0.5), {TextTransparency = 0}):Play()
-task.delay(1.5, function()
-	TweenService:Create(introText, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
-end)
-task.delay(2.1, function()
-	introText:Destroy()
-end)
-
--- Main Frame
-local mainFrame = Instance.new("Frame")
-mainFrame.Size = UDim2.new(0, 230, 0, 185)
-mainFrame.Position = UDim2.new(1, -240, 0.5, -90)
-mainFrame.BackgroundColor3 = Color3.fromRGB(165, 42, 42)
-mainFrame.BorderSizePixel = 0
-mainFrame.Parent = screenGui
-Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 8)
-
--- Header
-local header = Instance.new("TextLabel")
-header.Size = UDim2.new(1, -25, 0, 25)
-header.BackgroundColor3 = Color3.fromRGB(144, 238, 144)
-header.Text = "🥚 Egg Randomizer"
-header.TextColor3 = Color3.fromRGB(255, 255, 255)
-header.Font = Enum.Font.SourceSansBold
-header.TextSize = 16
-header.TextXAlignment = Enum.TextXAlignment.Left
-header.Parent = mainFrame
-Instance.new("UICorner", header).CornerRadius = UDim.new(0, 8)
-
--- Info Button
-local infoButton = Instance.new("TextButton")
-infoButton.Size = UDim2.new(0, 25, 0, 25)
-infoButton.Position = UDim2.new(1, -25, 0, 0)
-infoButton.BackgroundColor3 = Color3.fromRGB(100, 149, 237)
-infoButton.Text = "?"
-infoButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-infoButton.Font = Enum.Font.SourceSansBold
-infoButton.TextSize = 16
-infoButton.Parent = mainFrame
-Instance.new("UICorner", infoButton).CornerRadius = UDim.new(0, 8)
-
--- Auto Stop
-local autoStop = Instance.new("TextButton")
-autoStop.Size = UDim2.new(1, -10, 0, 22)
-autoStop.Position = UDim2.new(0, 5, 0, 30)
-autoStop.BackgroundColor3 = Color3.fromRGB(255, 99, 99)
-autoStop.Text = "[A] Auto Stop: OFF"
-autoStop.TextColor3 = Color3.fromRGB(255, 255, 255)
-autoStop.Font = Enum.Font.SourceSansBold
-autoStop.TextSize = 13
-autoStop.Parent = mainFrame
-
-local autoStopEnabled = false
-autoStop.MouseButton1Click:Connect(function()
-	autoStopEnabled = not autoStopEnabled
-	autoStop.Text = "[A] Auto Stop: " .. (autoStopEnabled and "ON" or "OFF")
-	autoStop.BackgroundColor3 = autoStopEnabled and Color3.fromRGB(144, 238, 144) or Color3.fromRGB(255, 99, 99)
-end)
-
--- Reroll Pet Display
-local rerollPet = Instance.new("TextButton")
-rerollPet.Size = UDim2.new(1, -10, 0, 22)
-rerollPet.Position = UDim2.new(0, 5, 0, 55)
-rerollPet.BackgroundColor3 = Color3.fromRGB(100, 149, 237)
-rerollPet.Text = "[B] Reroll Pet Display"
-rerollPet.TextColor3 = Color3.fromRGB(255, 255, 255)
-rerollPet.Font = Enum.Font.SourceSansBold
-rerollPet.TextSize = 13
-rerollPet.Parent = mainFrame
-
--- Pet Duplicate Input
-local petDupLabel = Instance.new("TextLabel")
-petDupLabel.Size = UDim2.new(0, 90, 0, 18)
-petDupLabel.Position = UDim2.new(0, 5, 0, 80)
-petDupLabel.BackgroundTransparency = 1
-petDupLabel.Text = "Pet Duplicate:"
-petDupLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-petDupLabel.Font = Enum.Font.SourceSansBold
-petDupLabel.TextSize = 12
-petDupLabel.TextXAlignment = Enum.TextXAlignment.Left
-petDupLabel.Parent = mainFrame
-
-local petDupInput = Instance.new("TextBox")
-petDupInput.Size = UDim2.new(0, 120, 0, 18)
-petDupInput.Position = UDim2.new(0, 105, 0, 80)
-petDupInput.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-petDupInput.Text = ""
-petDupInput.PlaceholderText = "Type pet"
-petDupInput.TextColor3 = Color3.fromRGB(0, 0, 0)
-petDupInput.Font = Enum.Font.SourceSans
-petDupInput.TextSize = 13
-petDupInput.ClearTextOnFocus = false
-petDupInput.Parent = mainFrame
+local petSpawnerInput = Instance.new("TextBox")
+petSpawnerInput.Size = UDim2.new(0, 120, 0, 18)
+petSpawnerInput.Position = UDim2.new(0, 105, 0, 80)
+petSpawnerInput.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+petSpawnerInput.Text = ""
+petSpawnerInput.PlaceholderText = "Type pet"
+petSpawnerInput.TextColor3 = Color3.fromRGB(0, 0, 0)
+petSpawnerInput.Font = Enum.Font.SourceSans
+petSpawnerInput.TextSize = 13
+petSpawnerInput.ClearTextOnFocus = false
+petSpawnerInput.Parent = mainFrame
 
 -- KG Input + Enter Button
 local kgLabel = Instance.new("TextLabel")
@@ -152,71 +61,4 @@ Instance.new("UICorner", kgEnter).CornerRadius = UDim.new(0, 4)
 
 kgEnter.MouseButton1Click:Connect(function()
 	print("KG Entered:", kgInput.Text)
-	-- Add your action here
-end)
-
--- Reminder
-local reminder = Instance.new("TextLabel")
-reminder.Size = UDim2.new(1, -10, 0, 20)
-reminder.Position = UDim2.new(0, 5, 0, 130)
-reminder.BackgroundTransparency = 1
-reminder.Text = "PLEASE WAIT 5 TO 10 MINS TO WORK THIS SCRIPT"
-reminder.TextColor3 = Color3.fromRGB(255, 255, 255)
-reminder.Font = Enum.Font.SourceSansBold
-reminder.TextSize = 11
-reminder.TextWrapped = true
-reminder.TextXAlignment = Enum.TextXAlignment.Center
-reminder.Parent = mainFrame
-
--- Info Frame
-local infoFrame = Instance.new("Frame")
-infoFrame.Size = UDim2.new(0, 250, 0, 100)
-infoFrame.Position = UDim2.new(0.5, -125, 0.5, -50)
-infoFrame.BackgroundColor3 = Color3.fromRGB(165, 42, 42)
-infoFrame.BorderSizePixel = 0
-infoFrame.Visible = false
-infoFrame.Parent = screenGui
-Instance.new("UICorner", infoFrame).CornerRadius = UDim.new(0, 8)
-
-local infoHeader = Instance.new("TextLabel")
-infoHeader.Size = UDim2.new(1, 0, 0, 25)
-infoHeader.BackgroundColor3 = Color3.fromRGB(144, 238, 144)
-infoHeader.Text = "Info"
-infoHeader.TextColor3 = Color3.fromRGB(255, 255, 255)
-infoHeader.Font = Enum.Font.SourceSansBold
-infoHeader.TextSize = 16
-infoHeader.Parent = infoFrame
-Instance.new("UICorner", infoHeader).CornerRadius = UDim.new(0, 8)
-
-local infoText = Instance.new("TextLabel")
-infoText.Size = UDim2.new(1, -20, 1, -35)
-infoText.Position = UDim2.new(0, 10, 0, 30)
-infoText.BackgroundTransparency = 1
-infoText.TextWrapped = true
-infoText.TextXAlignment = Enum.TextXAlignment.Center
-infoText.TextYAlignment = Enum.TextYAlignment.Top
-infoText.Text = "Auto Stop when found:\nRaccoon, Dragonfly, Queen Bee, Red Fox,\nDisco Bee, Butterfly."
-infoText.TextColor3 = Color3.fromRGB(255, 255, 255)
-infoText.Font = Enum.Font.SourceSansBold
-infoText.TextSize = 13
-infoText.Parent = infoFrame
-
-local closeBtn = Instance.new("TextButton")
-closeBtn.Size = UDim2.new(0, 20, 0, 20)
-closeBtn.Position = UDim2.new(1, -25, 0, 5)
-closeBtn.BackgroundColor3 = Color3.fromRGB(255, 85, 85)
-closeBtn.Text = "X"
-closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-closeBtn.Font = Enum.Font.SourceSansBold
-closeBtn.TextSize = 13
-closeBtn.Parent = infoHeader
-Instance.new("UICorner", closeBtn).CornerRadius = UDim.new(0, 6)
-
--- Info Toggle
-infoButton.MouseButton1Click:Connect(function()
-	infoFrame.Visible = not infoFrame.Visible
-end)
-
-closeBtn.MouseButton1Click:Connect(function()
-	infoFrame.Visible = false
 end)
